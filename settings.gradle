@@ -1,0 +1,3 @@
+rootProject.name = "dynalist_database"
+include ':demo'
+include ':dynalyst_db'
