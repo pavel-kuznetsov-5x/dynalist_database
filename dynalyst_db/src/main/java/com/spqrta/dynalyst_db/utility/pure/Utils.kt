@@ -17,104 +17,14 @@ import android.view.inputmethod.InputMethodManager
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
-import com.spqrta.dynalyst_db.utility.CustomApplication
 import org.json.JSONArray
 import org.json.JSONObject
 import org.threeten.bp.LocalDate
-import com.spqrta.dynalyst_db.utility.CustomApplication.Companion.context
 import java.io.InputStream
 import kotlin.math.pow
 import kotlin.math.round
 
 object Utils {
-    fun copyToClipboard(text: String, showToast: Boolean = false) {
-        val manager =
-            CustomApplication.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clipData = ClipData.newPlainText("Source Text", text)
-        manager.setPrimaryClip(clipData)
-        if (showToast) {
-//            Toaster.show(CustomApplication.context.resources.getString(R.string.copied_to_clipboard))
-        }
-    }
-
-    fun hideKeyboard(activity: Activity) {
-        val inputMethodManager =
-            activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        activity.currentFocus?.let {
-            inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
-        }
-    }
-
-    fun showKeyboard(activity: Activity, view: View? = null) {
-        view?.requestFocus()
-        val inputMethodManager =
-            context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.showSoftInput(activity.currentFocus, 0)
-    }
-
-    fun setStatusBarColor(
-        activity: Activity,
-        @ColorRes color: Int,
-        setLight: Boolean? = null,
-        @ColorRes compatColor: Int? = null
-    ) {
-        if (setLight != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                var flags = activity.window.decorView.systemUiVisibility
-
-                if (setLight) {
-                    flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                    activity.window.decorView.systemUiVisibility = flags
-
-                } else {
-                    flags = flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
-                    activity.window.decorView.systemUiVisibility = flags
-                }
-
-                activity.window.statusBarColor = activity.resources.getColor(color)
-
-            } else {
-                activity.window.statusBarColor = activity.resources.getColor(compatColor ?: color)
-            }
-        } else {
-            activity.window.statusBarColor = activity.resources.getColor(color)
-        }
-    }
-
-    fun getStringWithDebug(@StringRes res: Int, debugText: String): String {
-        return if (CustomApplication.appConfig.releaseMode) {
-            CustomApplication.context.getString(res)
-        } else {
-            debugText
-        }
-    }
-
-    fun getStringWithDebug(@StringRes res: Int, throwable: Throwable): String {
-        return if (CustomApplication.appConfig.releaseMode) {
-            CustomApplication.context.getString(res)
-        } else {
-            "${throwable::class.java.simpleName} ${throwable.message}"
-        }
-    }
-
-    fun loadJsonFromAssets(filename: String, array: Boolean = false): JSONObject {
-        val am = CustomApplication.context.assets
-        val inputStream = am.open(filename)
-        val json: JSONObject = if (array) {
-            val root = JSONObject()
-            root.put(
-                "values", JSONArray(
-                    readFromStream(
-                        inputStream
-                    )
-                )
-            )
-            root
-        } else {
-            JSONObject(readFromStream(inputStream))
-        }
-        return json
-    }
 
     private fun readFromStream(inputStream: InputStream): String {
         var ch: Int = 0
@@ -200,9 +110,6 @@ object Base64Utils {
 object Stub : Any()
 
 
-fun Int.toColorInt(): Int {
-    return CustomApplication.context.resources.getColor(this)
-}
 
 fun <T : Any?> MutableLiveData<T>.initWith(initialValue: T) = apply { setValue(initialValue) }
 

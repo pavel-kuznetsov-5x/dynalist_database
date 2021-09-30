@@ -1,6 +1,5 @@
 package com.spqrta.dynalyst_db.base.network
 
-import com.spqrta.dynalyst_db.utility.CustomApplication
 import com.spqrta.dynalyst_db.utility.Logg
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -21,17 +20,17 @@ abstract class BaseRequestManager {
 
     protected fun buildRetrofit() {
         val interceptor = HttpLoggingInterceptor { message ->
-            if (CustomApplication.appConfig.debugMode) {
-                if(message.length < 256) {
-                    Logg.v(message)
-                } else {
-                    try {
-                        Logg.v(JSONObject(message).toString(4))
-                    } catch (e: JSONException) {
-                        Logg.v(message)
-                    }
-                }
-            }
+//            if (CustomApplication.appConfig.debugMode) {
+//                if(message.length < 256) {
+//                    Logg.v(message)
+//                } else {
+//                    try {
+//                        Logg.v(JSONObject(message).toString(4))
+//                    } catch (e: JSONException) {
+//                        Logg.v(message)
+//                    }
+//                }
+//            }
         }
         interceptor.level = HttpLoggingInterceptor.Level.BODY
 //        interceptor.level = HttpLoggingInterceptor.Level.BASIC
@@ -39,9 +38,9 @@ abstract class BaseRequestManager {
         val clientBuilder = OkHttpClient.Builder()
 
         buildClient(clientBuilder)
-        if (CustomApplication.appConfig.debugMode) {
-            clientBuilder.addInterceptor(interceptor)
-        }
+//        if (CustomApplication.appConfig.debugMode) {
+//            clientBuilder.addInterceptor(interceptor)
+//        }
 
 
         val client = clientBuilder
