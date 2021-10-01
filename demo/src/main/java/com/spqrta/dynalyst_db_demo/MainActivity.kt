@@ -13,13 +13,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val db = DynalistDatabase(
-            apiKey = BuildConfig.VERSION_CODE.toString(),
-            rootNodeId = "wyvZlLM6m5lqOyZixI4tLbLr"
+            apiKey = BuildConfig.DYNALIST_API_KEY.toString(),
+            documentId = "wyvZlLM6m5lqOyZixI4tLbLr"
         )
 
         GlobalScope.launch {
             db.init()
-            Logg.d(db.getChildren("wyvZlLM6m5lqOyZixI4tLbLr"))
         }
     }
 }

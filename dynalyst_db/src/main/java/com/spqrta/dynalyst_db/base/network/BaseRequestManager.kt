@@ -1,5 +1,7 @@
 package com.spqrta.dynalyst_db.base.network
 
+import android.os.Build
+import com.spqrta.dynalyst_db.BuildConfig
 import com.spqrta.dynalyst_db.utility.Logg
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,7 +22,8 @@ abstract class BaseRequestManager {
 
     protected fun buildRetrofit() {
         val interceptor = HttpLoggingInterceptor { message ->
-//            if (CustomApplication.appConfig.debugMode) {
+//            println(message)
+//            if (BuildConfig.DEBUG) {
 //                if(message.length < 256) {
 //                    Logg.v(message)
 //                } else {
@@ -38,9 +41,9 @@ abstract class BaseRequestManager {
         val clientBuilder = OkHttpClient.Builder()
 
         buildClient(clientBuilder)
-//        if (CustomApplication.appConfig.debugMode) {
-//            clientBuilder.addInterceptor(interceptor)
-//        }
+        if (BuildConfig.DEBUG) {
+            clientBuilder.addInterceptor(interceptor)
+        }
 
 
         val client = clientBuilder
