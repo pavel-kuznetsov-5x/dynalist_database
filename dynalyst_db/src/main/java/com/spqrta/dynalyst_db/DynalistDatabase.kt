@@ -25,9 +25,9 @@ class DynalistDatabase(
         initialized = true
     }
 
-    suspend fun edit(nodeId: String, content: String? = null, note: String? = null) {
+    suspend fun edit(nodeId: String? = null, content: String? = null, note: String? = null) {
         check(initialized) { "db is not initialized" }
-        _edit(nodeId = nodeId, content = content, note = note)
+        _edit(nodeId = nodeId ?: dataNodeId, content = content, note = note)
     }
 
     private suspend fun _edit(nodeId: String, content: String? = null, note: String? = null) {
