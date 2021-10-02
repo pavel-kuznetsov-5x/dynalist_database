@@ -97,6 +97,13 @@ class DynalistDatabase(
         }
     }
 
+    suspend fun getData(): DynalistApi.DynalistNode {
+        check(initialized) { "db is not initialized" }
+        return getChildren(documentId).nodes.first {
+            it.id == dataNodeId
+        }
+    }
+
     private suspend fun getChildren(fileId: String): DynalistApi.GetResponse {
         return api.getDoc(
             DynalistApi.GetBody(

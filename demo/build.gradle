@@ -43,8 +43,8 @@ repositories {
 }
 
 dependencies {
-//    implementation project(path: ':dynalyst_db')
-    implementation 'com.github.pavel-kuznetsov-5x:dynalist_database:1.0.0'
+    implementation project(path: ':dynalyst_db')
+//    implementation 'com.github.pavel-kuznetsov-5x:dynalist_database:1.0.0'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.6.0'

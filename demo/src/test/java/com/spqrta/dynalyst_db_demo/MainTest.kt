@@ -1,6 +1,7 @@
 package com.spqrta.dynalyst_db_demo
 
 import com.spqrta.dynalyst_db.DynalistDatabase
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
@@ -15,6 +16,9 @@ class MainTest {
 
         runBlocking {
             db.init()
+            val data = "data ${Math.random()}"
+            db.edit(note = data)
+            assertEquals(data, db.getData().note)
         }
     }
 
